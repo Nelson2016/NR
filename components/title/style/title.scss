@@ -1,0 +1,23 @@
+@import "../../../asset/style/constant.scss";
+@import "../../../asset/style/common.scss";
+
+.n-title {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: $color-blue;
+  border-bottom: $color-blue 1px solid;
+  padding: $margin-padding-1 $margin-padding-2;
+
+  .n-title-text {
+    color: inherit;
+    font-size: $font-size-4;
+  }
+
+  .n-title-more {
+    color: inherit;
+    cursor: pointer;
+  }
+
+}

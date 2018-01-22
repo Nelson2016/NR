@@ -1,0 +1,80 @@
+@import "../../../asset/style/constant.scss";
+@import "../../../asset/style/common.scss";
+
+$radio-size: 16px;
+
+.n-radio {
+
+  height: $radio-size;
+  display: inline-block;
+
+  label {
+    float: left;
+    line-height: $radio-size;
+    margin-left: 10px;
+  }
+
+  .n-radio-container {
+    float: left;
+    width: $radio-size;
+    height: $radio-size;
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+
+    input {
+      cursor: pointer;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      left: 0;
+      top: 0;
+      z-index: 10;
+
+      &:checked ~ .n-radio-background {
+        border: $color-blue 1px solid;
+      }
+
+      &:checked ~ .n-radio-background:after {
+        content: '';
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: $color-blue;
+        border-radius: 50%;
+        transform: scale(.5);
+      }
+    }
+
+    .n-radio-background {
+      border: $line-color-gray 1px solid;
+      border-radius: 50%;
+      height: $radio-size;
+      width: $radio-size;
+      display: block;
+      transition: all .4s;
+    }
+
+  }
+
+}
+
+.n-radio-group {
+
+  & > label {
+    float: left;
+    line-height: 20px;
+    margin-right: 50px;
+  }
+
+  .n-radio-group-item {
+    margin-right: 30px;
+    display: inline;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+}

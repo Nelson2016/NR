@@ -1,0 +1,41 @@
+@import "../../../asset/style/constant";
+@import "../../../asset/style/common";
+
+.n-table {
+
+  width: 100%;
+
+  table {
+
+    width: 100%;
+    border-collapse: collapse;
+
+    caption {
+      padding: $margin-padding-2;
+    }
+
+    tr {
+
+      border-bottom: $line-color-gray 1px solid;
+
+      &:hover {
+        cursor: pointer;
+        background: $color-blue-hover;
+      }
+
+      td, th {
+        padding: $margin-padding-3 $margin-padding-2;
+        color: inherit;
+        text-align: left;
+      }
+
+      td {
+      }
+
+      th {
+        font-weight:normal;
+        background: $background-color-gray;
+      }
+    }
+  }
+}

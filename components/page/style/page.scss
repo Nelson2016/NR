@@ -1,0 +1,51 @@
+@import "../../../asset/style/constant";
+@import "../../../asset/style/common";
+
+$size: 30px;
+
+.n-page {
+
+  .n-page-list {
+
+    @include n-clearfix;
+
+    li {
+      width: $size;
+      height: $size;
+      border: $line-color-gray 1px solid;
+      float: left;
+      margin-right: $margin-padding-2;
+      margin-bottom: $margin-padding-2;
+      cursor: not-allowed;
+      line-height: 30px;
+      color: $font-color-gray;
+      text-align: center;
+      border-radius: $border-radius-2;
+
+      i {
+        color: $font-color-gray;
+        text-align: center;
+        font-weight: normal;
+        width: $size;
+        height: $size;
+        line-height: $size - 2px;
+        font-size: $font-size-3;
+      }
+
+      &.n-active {
+        border: $color-blue 1px solid;
+        color: $color-blue;
+        cursor: pointer;
+        i {
+          color: $color-blue;
+        }
+      }
+
+      &.n-page-current {
+        background: $color-blue;
+        color: $font-color-white;
+      }
+    }
+  }
+
+}

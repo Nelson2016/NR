@@ -1,0 +1,49 @@
+@import "../../../asset/style/constant.scss";
+@import "../../../asset/style/common.scss";
+
+.n-breadcrumb {
+  display: flex;
+  align-items: center;
+  padding: $margin-padding-1 0;
+  border-bottom: $line-color-gray 1px solid;
+
+  i {
+    color: $font-color-gray;
+  }
+
+  ul {
+
+    @include n-clearfix;
+
+    li {
+
+      float: left;
+
+      &:after {
+        content: '/';
+        font-size: inherit;
+        color: inherit;
+      }
+
+      &:last-child:after {
+        content: '';
+      }
+
+      &:last-child {
+        a {
+          color: $font-color-black;
+        }
+      }
+
+      a {
+        font-size: $font-size-2;
+        color: $font-color-gray;
+        padding: 0 $margin-padding-2;
+
+      }
+
+    }
+
+  }
+
+}

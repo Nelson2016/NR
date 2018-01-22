@@ -1,0 +1,40 @@
+{
+  "name": "nr",
+  "version": "1.0.0",
+  "description": "Nelson's react components.",
+  "main": "./components/index.js",
+  "scripts": {
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nelson2016/NR.git"
+  },
+  "keywords": [
+    "nelson",
+    "react",
+    "components",
+    "ui"
+  ],
+  "author": "Nelson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nelson2016/NR/issues"
+  },
+  "homepage": "https://github.com/Nelson2016/NR#readme",
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
+    "ne": "file:../NE",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
+  }
+}
