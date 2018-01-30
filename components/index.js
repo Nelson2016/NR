@@ -13,6 +13,7 @@ import Image from './image';
 import Upload from './upload';
 import RenderToBody from './renderToBody';
 import Editor from './editor';
+import Toast from './toast';
 
 export {
     Form,
@@ -29,5 +30,6 @@ export {
     Image,
     Upload,
     RenderToBody,
-    Editor
+    Editor,
+    Toast
 };

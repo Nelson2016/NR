@@ -7,10 +7,6 @@ class Tree extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            data: this.props.data
-        }
     }
 
     toggleTree(ref) {
@@ -36,7 +32,7 @@ class Tree extends React.Component {
 
     createTree(parentIndex, data) {
         let tree = data.map((item, index) => {
-            let subData = item.subData,
+            let sub = item.sub,
                 parentIndexForSub = parentIndex + "-" + index,
                 ref = "treeItem" + parentIndex + "-" + index;
 
@@ -45,11 +41,11 @@ class Tree extends React.Component {
                      ref={e => this[ref] = e}
                      onClick={this.toggleTree.bind(this, ref)}>
                     <span className={styles["n-tree-arrow"]}>
-                        {subData && <i className={fonts['icon-tree-arrow']} data-icon></i>}
+                        {sub && <i className={fonts['icon-tree-arrow']} data-icon></i>}
                     </span>
                     <span className={styles['n-tree-title']}>{item.title}</span>
                 </div>
-                {subData && this.createTree(parentIndexForSub, subData)}
+                {sub && this.createTree(parentIndexForSub, sub)}
             </li>
         });
 
@@ -60,7 +56,7 @@ class Tree extends React.Component {
 
     render() {
 
-        const tree = this.createTree("", this.state.data);
+        const tree = this.createTree("", this.props.data);
 
         return <div className={styles['n-tree']}>
             {tree}

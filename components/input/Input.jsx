@@ -81,6 +81,13 @@ class Input extends React.Component {
         notice.classList.add(styles['n-input-notice-active']);
     }
 
+    /**
+     * @description     获取value
+     */
+    val() {
+        return this.input.value;
+    }
+
     render() {
 
         let {type = 'text', defaultValue, disabled, placeholder, autoFocus, name, readOnly, leftIcon, onKeyUp, value, onFocus, onBlur, label, htmlFor} = this.props;

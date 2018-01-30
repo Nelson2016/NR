@@ -1,8 +1,11 @@
 import React from 'react';
 import Image from '../image';
+import Toast from '../toast';
 
 import fonts from '../../asset/style/fonts.scss';
 import styles from './style/upload.scss';
+
+import functions from '../functions';
 
 class Upload extends React.Component {
 
@@ -71,8 +74,21 @@ class Upload extends React.Component {
         let _this = this;
         let filePath = this.getFileUrl(this.fileInput.files[0]);//拿到文件对象
         let files = _this.state.files;
-        files.push({local: filePath});
-        this.setState({files: files});
+
+        let formData = new FormData();
+
+        formData.append('demo', this.fileInput.files[0]);
+        functions.upload(this.props.action, {
+            body: formData
+        }).then((res) => {
+            if (res.status === 1) {
+                files.push({local: filePath, server: res.data});
+                this.setState({files: files});
+                Toast.success('上传成功');
+            } else {
+                Toast.error(res.message || '上传失败');
+            }
+        })
     }
 
     /**

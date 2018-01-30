@@ -23,64 +23,22 @@ class Cascader extends React.Component {
                 left:
                     0
             },
-            data: [
-                {
-                    title: "这里是标题",
-                    id: 0,
-                    sub: [
-                        {
-                            title: "这里是标题这里是标题",
-                            id: 1,
-                            sub: [
-                                {
-                                    title: "这里是标题这里",
-                                    id: 2
-                                }
-                            ]
-                        },
-                        {
-                            title: "这里是标题",
-                            id: 3
-                        },
-                        {
-                            title: "这标题",
-                            id: 4
-                        }
-                    ]
-                },
-                {
-                    title: "这里是标题这里是标题",
-                    sub: [
-                        {
-                            title: "这里是标题",
-                            id: 5,
-                            sub: [
-                                {
-                                    title: "这里是标题",
-                                    id: 6,
-                                }
-                            ]
-                        },
-                        {
-                            title: "这里是标题这里是标题",
-                            id: 7
-                        },
-                        {
-                            title: "这里是标题这里是标题这里是标题这里是标题",
-                            id: 8
-                        }
-                    ]
-                },
-                {
-                    title: "这里是标题这里是标题",
-                    id: 9
-                }
-            ]
+            data: this.props.data || []
         };
 
         //默认最大文本长度
         const maxLength = parseInt(this.props.maxLength);
         this.maxLength = maxLength > 0 ? maxLength : 200;
+    }
+
+    /**
+     * @description     设置数据
+     * @param data
+     */
+    setData(data) {
+        this.setState(Object.assign({}, this.state, {
+            data
+        }))
     }
 
     /**
@@ -128,6 +86,9 @@ class Cascader extends React.Component {
      * @param   action  打开\关闭
      */
     toggle(action) {
+        if (action === 'open' && this.state.data.length === 0) {
+            return;
+        }
         if (!this.input.disabled && !this.input.readOnly) {
             this.setState(Object.assign(this.state, {
                 status: action,
@@ -163,6 +124,27 @@ class Cascader extends React.Component {
                 valueIndexArr
             }));
         }
+    }
+
+    /**
+     * @description 获取Value Object
+     */
+    val() {
+        let data = this.state.data;
+        let valueIndexArr = this.state.valueIndexArr;
+        let valueIdArr = [], valueTitleArr = [];
+
+        for (let i = 0; i < valueIndexArr.length; i++) {
+            data = data[valueIndexArr[i]];
+            valueIdArr.push(data.id);
+            valueTitleArr.push(data.title);
+        }
+
+        return {
+            valueIndexArr,
+            valueIdArr,
+            valueTitleArr
+        };
     }
 
     render() {
