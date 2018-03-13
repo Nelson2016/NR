@@ -45,6 +45,7 @@ $tree-arrow-size: 16px;
             transition: all .2s;
             width: $tree-arrow-size;
             height: $tree-arrow-size;
+            margin-right: $margin-padding-1;
 
             i {
               font-size: $icon-size-2;

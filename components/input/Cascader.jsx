@@ -15,14 +15,30 @@ class Cascader extends React.Component {
         super(props);
 
         this.state = {
-            value: this.props.value || '',
-            valueIndexArr: [],
+            value: [],//['5a705c04af4ffe3a62b66271', '5a705c24af4ffe3a62b66273'],
             status: 'close',
             coordinate: {
                 top: 0,
                 left:
                     0
             },
+            // data: [{
+            //     "id": "5a705c04af4ffe3a62b66271",
+            //     "title": "中国",
+            //     "sub": [{
+            //         "id": "5a705c24af4ffe3a62b66273",
+            //         "title": "购物网站",
+            //         "sub": [{
+            //             "id": "5a7c5a81c3868b1e5a053ad2",
+            //             "title": "123",
+            //             "sub": false
+            //         }, {"id": "5a7c5c4366801d1eb5ec1279", "title": "淘宝", "sub": false}]
+            //     }, {
+            //         "id": "5a705c2faf4ffe3a62b66274",
+            //         "title": "视频网站",
+            //         "sub": [{"id": "5a7d55e6bb36c82219afb6b5", "title": "优酷", "sub": false}]
+            //     }]
+            // }]
             data: this.props.data || []
         };
 
@@ -36,9 +52,7 @@ class Cascader extends React.Component {
      * @param data
      */
     setData(data) {
-        this.setState(Object.assign({}, this.state, {
-            data
-        }))
+        this.setState(Object.assign({}, this.state, data))
     }
 
     /**
@@ -99,29 +113,25 @@ class Cascader extends React.Component {
     }
 
     /**
-     * @description             选择回调函数
-     * @param valueIndexArr     新的valueIndexArr
+     * @description         选择回调函数
+     * @param index         电机项的索引
+     * @param id            电机项的id
+     * @param hasSub        是否有子选项
      * @param e
      */
-    onClick(valueIndexArr, e) {
+    onClick(index, id, hasSub, e) {
         e.stopPropagation();
         const state = this.state;
-        let onClickData = state.data, value = '';
+        let value = state.value;
+        value[index] = id;
+        value = value.slice(0, index + 1);
 
-        for (let i = 0; i < valueIndexArr.length; i++) {
-            value += onClickData[valueIndexArr[i]].title + ' / ';
-            onClickData = onClickData[valueIndexArr[i]].sub;
-        }
-
-        value = value.substr(0, value.length - 2);
-
-        if (onClickData) {
-            this.setState(Object.assign({}, state, {valueIndexArr}));
+        if (hasSub) {
+            this.setState(Object.assign({}, state, {value}));
         } else {
             this.setState(Object.assign({}, state, {
                 status: 'close',
                 value,
-                valueIndexArr
             }));
         }
     }
@@ -130,69 +140,88 @@ class Cascader extends React.Component {
      * @description 获取Value Object
      */
     val() {
-        let data = this.state.data;
-        let valueIndexArr = this.state.valueIndexArr;
-        let valueIdArr = [], valueTitleArr = [];
-
-        for (let i = 0; i < valueIndexArr.length; i++) {
-            data = data[valueIndexArr[i]];
-            valueIdArr.push(data.id);
-            valueTitleArr.push(data.title);
-        }
+        let value = this.state.value;
 
         return {
-            valueIndexArr,
-            valueIdArr,
-            valueTitleArr
+            value,
+            valueStr: this.input.value
         };
     }
 
     render() {
 
         let state = this.state;
-        let coordinate = state.coordinate;
-        let valueIndexArr = state.valueIndexArr;
-        let data = state.data;
-        let items = [];
+        let coordinate = state.coordinate,
+            data = state.data || [],
+            items = [],
+            value = state.value,
+            valueStr = '';
 
-        let {defaultValue, disabled, placeholder, name, readOnly, onBlur, label, htmlFor} = this.props;
-        let value = state.value;
+        let {disabled, placeholder, name, readOnly, onBlur, label, htmlFor} = this.props;
 
-        items.push(<ul key="cascader-0" className={styles["n-cascader-item"]}>
-            {
-                data.map((item, index) => <li key={"cascader-0-" + index}
-                                              className={valueIndexArr[0] !== undefined && index === valueIndexArr[0] ? styles['n-cascader-active'] : ''}
-                                              data-id={item.id}
-                                              onClick={this.onClick.bind(this, [index])}>
-                    <span>{item.title + "-0-" + index}</span>
-                    {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
-                </li>)
+        if (value.length > 0) {
+
+            items = value.map((valueItem, valueIndex) => {
+
+                let ulKey = "cascader-" + valueIndex;
+
+                return <ul key={ulKey} className={styles["n-cascader-item"]}>
+                    {
+                        data && data.map((item, itemIndex) => {
+                            let isActive = item.id === valueItem;
+                            if (isActive) {
+                                data = item.sub;
+                                valueStr += item.title + ' / ';
+                            }
+
+                            return <li key={ulKey + "-" + itemIndex}
+                                       className={isActive ? styles['n-cascader-active'] : ''}
+                                       data-id={item.id}
+                                       onClick={this.onClick.bind(this, valueIndex, item.id, !!item.sub)}>
+                                <span>{item.title}</span>
+                                {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
+                            </li>
+                        })
+                    }
+                </ul>
+
+            });
+
+            if (!!data) {
+                let valueIndex = value.length;
+
+                items.push(<ul key={"cascader-" + valueIndex} className={styles["n-cascader-item"]}>
+                    {
+                        data.map((item, itemIndex) => {
+
+                            return <li key={"cascader-" + valueIndex + "-" + itemIndex}
+                                       data-id={item.id}
+                                       onClick={this.onClick.bind(this, valueIndex, item.id, !!item.sub)}>
+                                <span>{item.title}</span>
+                                {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
+                            </li>
+                        })
+                    }
+                </ul>)
             }
-        </ul>);
 
-        let temp = data;
-        let valueIndexArrTemp = [];
-
-        items.push(valueIndexArr.map((selectIndex, containerIndex) => {
-            containerIndex += 1;
-            temp = temp[selectIndex].sub;
-
-            valueIndexArrTemp.push(selectIndex);
-
-            return <ul key={"cascader-" + containerIndex} className={styles["n-cascader-item"]}>
+        } else if (data.length > 0) {
+            items.push(<ul key={"cascader-0"} className={styles["n-cascader-item"]}>
                 {
-                    temp && temp.map((subItem, subIndex) => {
-                        return <li key={"cascader-" + containerIndex + "-" + subIndex}
-                                   className={valueIndexArr[containerIndex] !== undefined && subIndex === valueIndexArr[containerIndex] ? styles['n-cascader-active'] : ''}
-                                   data-id={subItem.id}
-                                   onClick={this.onClick.bind(this, valueIndexArrTemp.concat([subIndex]))}>
-                            <span>{subItem.title + containerIndex + "-" + subIndex}</span>
-                            {subItem.sub && <i className={fonts['icon-forward']} data-icon></i>}
+                    data.map((item, itemIndex) => {
+
+                        return <li key={"cascader-0" + "-" + itemIndex}
+                                   data-id={item.id}
+                                   onClick={this.onClick.bind(this, 0, item.id, !!item.sub)}>
+                            <span>{item.title}</span>
+                            {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
                         </li>
                     })
                 }
-            </ul>
-        }));
+            </ul>)
+        }
+
+        valueStr = !!data ? '' : valueStr.substring(0, valueStr.length - 2);
 
         return <div className={styles['n-input']}>
             {label && <label htmlFor={htmlFor}>{label}</label>}
@@ -205,8 +234,8 @@ class Cascader extends React.Component {
                         readOnly={readOnly}
                         disabled={disabled}
                         placeholder={placeholder}
-                        value={value}
                         onBlur={onBlur}
+                        value={valueStr}
                     />
                     <div className={styles['n-input-cascader-cover-' + state.status]}
                          ref={e => this.cascaderCover = e}

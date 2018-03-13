@@ -9,7 +9,8 @@ class Page extends React.Component {
         super(props);
         const currentPage = this.props.currentPage;
         const totalPage = this.props.totalPage;
-        if(currentPage > totalPage){
+
+        if (currentPage > totalPage) {
             throw new Error('当前页吗不能大于总页码数');
         }
         this.state = {
@@ -34,7 +35,7 @@ class Page extends React.Component {
      * @param page      页码
      */
     goToPage(page) {
-        if(this.state.currentPage !== page){
+        if (this.state.currentPage !== page) {
             this.props.onChange && this.props.onChange(page);
             this.setState(Object.assign({}, this.state, {currentPage: page}));
         }
@@ -49,28 +50,50 @@ class Page extends React.Component {
 
         for (let pageIndex = 1; pageIndex <= totalPage; pageIndex++) {
             pagesDom.push(
-                <li key={pageIndex} className={styles[pageIndex === currentPage ? 'n-page-current' : 'n-active']}
-                    data-page-index={pageIndex}
-                    onClick={this.goToPage.bind(this, pageIndex)}>{pageIndex}</li>
+                <li key={pageIndex}>
+                    <button type="button"
+                            data-button-type="page"
+                            disabled={pageIndex === currentPage}
+                            data-page-index={pageIndex}
+                            onClick={this.goToPage.bind(this, pageIndex)}>
+                        {pageIndex}
+                    </button>
+                </li>
             )
         }
 
         return <div className={styles["n-page"]}>
             <ul className={styles["n-page-list"]}>
-                {<li className={styles[isFirstPage ? '' : 'n-active']}>
-                    <i className={fonts["icon-first-page"]} data-icon></i>
+                {<li>
+                    <button type="button"
+                            disabled={isFirstPage}
+                            onClick={this.goToPage.bind(this, 1)}>
+                        <i className={fonts["icon-first-page"]} data-icon></i>
+                    </button>
                 </li>}
-                {<li className={styles[isFirstPage ? '' : 'n-active']}>
-                    <i className={fonts["icon-back"]} data-icon></i>
+                {<li>
+                    <button type="button"
+                            disabled={isFirstPage}
+                            onClick={this.goToPage.bind(this, currentPage - 1)}>
+                        <i className={fonts["icon-back"]} data-icon></i>
+                    </button>
                 </li>}
 
                 {pagesDom}
 
-                {<li className={styles[isLastPage ? '' : 'n-active']}>
-                    <i className={fonts["icon-forward"]} data-icon></i>
+                {<li>
+                    <button type="button"
+                            disabled={isLastPage}
+                            onClick={this.goToPage.bind(this, currentPage + 1)}>
+                        <i className={fonts["icon-forward"]} data-icon></i>
+                    </button>
                 </li>}
-                {<li className={styles[isLastPage ? '' : 'n-active']}>
-                    <i className={fonts["icon-last-page"]} data-icon></i>
+                {<li>
+                    <button type="button"
+                            disabled={isLastPage}
+                            onClick={this.goToPage.bind(this, totalPage)}>
+                        <i className={fonts["icon-last-page"]} data-icon></i>
+                    </button>
                 </li>}
             </ul>
         </div>;

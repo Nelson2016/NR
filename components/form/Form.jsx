@@ -24,9 +24,21 @@ class Form extends React.Component {
         this.props.onSubmit && this.props.onSubmit(canSubmit, this.childrens);
     }
 
+    mapRefs(children) {
+        const _this = this;
+        let childrenRefs = React.Children.map(children, (item, index) => {
+            if (item.props.nRef) {
+                return item.props.nRef
+            } else if (item.props.children) {
+                return _this.mapRefs(item.props.children);
+            }
+        });
+        return childrenRefs;
+    }
+
     render() {
 
-        this.children = React.Children.map(this.props.children, (item, index) => item.props.nRef);
+        this.children = this.mapRefs(this.props.children);
 
         return <form ref={e => this.form = e} className="n-form" onSubmit={this.onSubmit.bind(this)}>
             {this.props.children}

@@ -12,40 +12,54 @@ $size: 30px;
     li {
       width: $size;
       height: $size;
-      border: $line-color-gray 1px solid;
       float: left;
       margin-right: $margin-padding-2;
       margin-bottom: $margin-padding-2;
-      cursor: not-allowed;
-      line-height: 30px;
-      color: $font-color-gray;
-      text-align: center;
-      border-radius: $border-radius-2;
 
-      i {
-        color: $font-color-gray;
-        text-align: center;
-        font-weight: normal;
+      button {
+
         width: $size;
         height: $size;
-        line-height: $size - 2px;
-        font-size: $font-size-3;
-      }
-
-      &.n-active {
         border: $color-blue 1px solid;
         color: $color-blue;
+        margin-right: $margin-padding-2;
+        margin-bottom: $margin-padding-2;
+        line-height: 30px;
+        text-align: center;
+        border-radius: $border-radius-2;
         cursor: pointer;
+
+        &:disabled {
+          border: $line-color-gray 1px solid;
+          i {
+            color: $font-color-gray;
+          }
+        }
+
+        &[data-button-type=page] {
+
+          &:disabled {
+            cursor: not-allowed;
+            background: $color-blue;
+            color: $font-color-white;
+          }
+
+        }
+
         i {
           color: $color-blue;
+          text-align: center;
+          font-weight: normal;
+          width: $size;
+          height: $size;
+          line-height: $size - 2px;
+          font-size: $font-size-3;
         }
+
       }
 
-      &.n-page-current {
-        background: $color-blue;
-        color: $font-color-white;
-      }
     }
+
   }
 
 }

@@ -17,6 +17,10 @@ class Checkbox extends React.Component {
         return this.checkbox.checked;
     }
 
+    val() {
+        return this.checkbox.value
+    }
+
     render() {
 
         const {defaultChecked, checkAllFor, name, value} = this.props;

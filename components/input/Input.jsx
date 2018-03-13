@@ -83,9 +83,10 @@ class Input extends React.Component {
 
     /**
      * @description     获取value
+     * @param   value   设置input值
      */
-    val() {
-        return this.input.value;
+    val(value) {
+        return value ? this.input.value = value : this.input.value;
     }
 
     render() {
