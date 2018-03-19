@@ -78,6 +78,7 @@ class Upload extends React.Component {
         let formData = new FormData();
 
         formData.append('demo', this.fileInput.files[0]);
+
         functions.upload(this.props.action, {
             body: formData
         }).then((res) => {
@@ -116,13 +117,22 @@ class Upload extends React.Component {
         return url;
     }
 
+    /**
+     * @description 设置文件列表
+     * @param files
+     */
+    setFiles(files) {
+        this.setState(Object.assign({}, this.state, {files}))
+    }
+
     render() {
 
         let items = this.state.files.map((item, index) =>
             <li key={index}>
                 <div className={styles["n-upload-thumb"]}>
                     <i className={fonts["icon-close"]} data-icon onClick={this.delete.bind(this, index)}></i>
-                    <Image src={item.local} alt={item.local} width="100px" height="100px"/>
+                    <Image src={item.local || item.server} alt={item.local || item.server} width="100px"
+                           height="100px"/>
                 </div>
                 <span className={styles["n-upload-path"]}></span>
             </li>);

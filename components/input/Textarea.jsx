@@ -90,6 +90,14 @@ class Textarea extends React.Component {
         this.setCount();
     }
 
+    /**
+     * @description     获取/设置value
+     * @param   value   设置input值
+     */
+    val(value) {
+        return value === undefined ? this.input.value : this.input.value = value;
+    }
+
     render() {
 
         let {defaultValue = "", disabled, placeholder, autoFocus, name, readOnly, onKeyUp, onFocus, onBlur, label, htmlFor, maxLength = 200} = this.props;

@@ -27,10 +27,12 @@ class Form extends React.Component {
     mapRefs(children) {
         const _this = this;
         let childrenRefs = React.Children.map(children, (item, index) => {
-            if (item.props.nRef) {
-                return item.props.nRef
-            } else if (item.props.children) {
-                return _this.mapRefs(item.props.children);
+            if (item.props) {
+                if (item.props.nRef) {
+                    return item.props.nRef
+                } else if (item.props.children) {
+                    return _this.mapRefs(item.props.children);
+                }
             }
         });
         return childrenRefs;

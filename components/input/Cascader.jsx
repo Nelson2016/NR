@@ -52,7 +52,7 @@ class Cascader extends React.Component {
      * @param data
      */
     setData(data) {
-        this.setState(Object.assign({}, this.state, data))
+        this.setState(Object.assign({}, this.state, data));
     }
 
     /**
@@ -168,7 +168,7 @@ class Cascader extends React.Component {
                 return <ul key={ulKey} className={styles["n-cascader-item"]}>
                     {
                         data && data.map((item, itemIndex) => {
-                            let isActive = item.id === valueItem;
+                            let isActive = item._id === valueItem;
                             if (isActive) {
                                 data = item.sub;
                                 valueStr += item.title + ' / ';
@@ -176,8 +176,8 @@ class Cascader extends React.Component {
 
                             return <li key={ulKey + "-" + itemIndex}
                                        className={isActive ? styles['n-cascader-active'] : ''}
-                                       data-id={item.id}
-                                       onClick={this.onClick.bind(this, valueIndex, item.id, !!item.sub)}>
+                                       data-id={item._id}
+                                       onClick={this.onClick.bind(this, valueIndex, item._id, !!item.sub)}>
                                 <span>{item.title}</span>
                                 {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
                             </li>
@@ -195,8 +195,8 @@ class Cascader extends React.Component {
                         data.map((item, itemIndex) => {
 
                             return <li key={"cascader-" + valueIndex + "-" + itemIndex}
-                                       data-id={item.id}
-                                       onClick={this.onClick.bind(this, valueIndex, item.id, !!item.sub)}>
+                                       data-id={item._id}
+                                       onClick={this.onClick.bind(this, valueIndex, item._id, !!item.sub)}>
                                 <span>{item.title}</span>
                                 {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
                             </li>
@@ -211,8 +211,8 @@ class Cascader extends React.Component {
                     data.map((item, itemIndex) => {
 
                         return <li key={"cascader-0" + "-" + itemIndex}
-                                   data-id={item.id}
-                                   onClick={this.onClick.bind(this, 0, item.id, !!item.sub)}>
+                                   data-id={item._id}
+                                   onClick={this.onClick.bind(this, 0, item._id, !!item.sub)}>
                             <span>{item.title}</span>
                             {item.sub && <i className={fonts['icon-forward']} data-icon></i>}
                         </li>

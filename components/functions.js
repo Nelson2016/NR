@@ -110,11 +110,21 @@ export default {
                 throw new Error('Server Error : ' + res.status);
             }
         }).then((res) => {
-            const path = res['cosmic.png'];
-            return {
-                status: path ? 1 : 0,
-                data: path,
-                message: res.message
+            const keys = Object.keys(res);
+            const count = keys.length;
+
+            if (count > 0) {
+                return {
+                    status: 1,
+                    data: res[keys[0]],
+                    message: '恭喜您，上传成功'
+                }
+            } else {
+                return {
+                    status: 1,
+                    data: {},
+                    message: '抱歉，上传失败'
+                }
             }
         })
     },
