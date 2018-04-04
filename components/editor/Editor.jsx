@@ -1,6 +1,8 @@
 import React from 'react';
 import NEditor from 'ne';
 
+const Editor = NEditor.Editor;
+
 class Markdown extends React.Component {
 
     /**
@@ -13,7 +15,7 @@ class Markdown extends React.Component {
     render() {
 
         return <div className="n-editor">
-            <NEditor ref={e => this.editor = e}/>
+            <Editor ref={e => this.editor = e}/>
         </div>
     }
 

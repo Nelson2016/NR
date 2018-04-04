@@ -2,7 +2,7 @@
   "name": "nr",
   "version": "1.0.0",
   "description": "Nelson's react components.",
-  "main": "./components/index.js",
+  "main": "./dist/components/index.js",
   "scripts": {
     "build": "gulp"
   },

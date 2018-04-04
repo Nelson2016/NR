@@ -27,6 +27,13 @@ class Input extends React.Component {
      * @description 检验输入款内容是否合法
      */
     checkValue() {
+        let checkValue = this.props.checkValue;
+        checkValue = checkValue === undefined || !!checkValue;
+
+        if (!checkValue) {
+            return true;
+        }
+
         const input = this.input;
         const ignore = this.props.ignore || false;
         const dataType = this.props.dataType || 'text';
@@ -91,6 +98,9 @@ class Input extends React.Component {
 
     render() {
 
+        let checkValue = this.props.checkValue;
+        checkValue = checkValue === undefined || !!checkValue;
+
         let {type = 'text', defaultValue, disabled, placeholder, autoFocus, name, readOnly, leftIcon, onKeyUp, value, onFocus, onBlur, label, htmlFor} = this.props;
 
         let leftIconDom = leftIcon ? [<span className={styles.icon} key='leftIcon'>
@@ -118,7 +128,8 @@ class Input extends React.Component {
                         onInput={this.onInput.bind(this)}
                     />
                 </div>
-                <span ref={e => this.notice = e} className={styles['n-input-notice']}> </span>
+                <span ref={e => this.notice = e}
+                      className={styles['n-input-notice' + (checkValue ? '' : '-none')]}> </span>
             </div>
         </div>
     }
